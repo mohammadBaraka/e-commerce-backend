@@ -10,7 +10,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import multer from "multer";
 const app = express();
-app.use(cors({ credentials: true }));
+app.use(cors({ origin: "*", credentials: true }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
