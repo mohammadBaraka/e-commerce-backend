@@ -103,6 +103,8 @@ router.post("/login", (req, res, next) => {
       res
         .cookie("check_token", token, {
           httpOnly: true,
+          sameSite: "none",
+          secure: true,
         })
         .status(200)
         .json({
@@ -121,6 +123,7 @@ router.post("/login", (req, res, next) => {
 router.post("/logout", async (req, res) => {
   res
     .clearCookie("check_token", {
+      httpOnly: true,
       sameSite: "none",
       secure: true,
     })
