@@ -10,21 +10,24 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import multer from "multer";
 const app = express();
+
+app.use(cookieParser());
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 app.use(
   cors({
-    origin: "https://tech-e-commerce-delta.vercel.app",
+    // origin: "https://tech-e-commerce-delta.vercel.app",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
-app.use(cookieParser());
-app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 //? *********************UPLOAD AN IMAGE**************************
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "../frontend/public/upload");
+    cb(null, "../e-commerce-frontend/public/upload");
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + file.originalname);
@@ -52,14 +55,9 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 app.use("/api", user);
 app.use("/api", categories);
 app.use("/api", sub_categories);
-app.use("/products", products);
+app.use("/product", products);
 app.use("/api", auth);
 
-// app.use((err, req, res, next) => {
-//   console.error(err);
-//   const message = err.message;
-//   res.status(500).json({ success: false, message });
-// });
 //?================================SERVER===============================================
 
 const HTTP_PORT = process.env.PORT || 8000;
